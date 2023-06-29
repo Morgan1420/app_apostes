@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'createGameScreen.dart';
+import 'select_players_screen.dart';
 import 'playGameScreen.dart';
 import 'selectGameScreen.dart';
 
 void main() {
-  runApp(MaterialApp(title: "aaaa", home: MainApp()));
+  runApp(const MaterialApp(
+    title: "Joc Apostes",
+    home: MainApp(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -14,11 +18,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Joc Apostes"),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
         child: Column(
           children: [
             // make empty space
-            const Expanded(child: SizedBox()), // 10% of total height of screen
+            const Expanded(child: SizedBox()),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -27,7 +35,17 @@ class MainApp extends StatelessWidget {
                       builder: (context) => const SelectGameScreen()),
                 );
               },
-              child: const Text('Select Game'),
+              child: const Text('Select Saved Game'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PlayGameScreen()),
+                );
+              },
+              child: const Text('Load Last Game'),
             ),
             ElevatedButton(
               onPressed: () {
