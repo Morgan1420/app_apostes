@@ -1,8 +1,11 @@
+import 'package:app_apostes_v0/GameMechanics/class_game.dart';
 import 'package:flutter/material.dart';
 import 'select_players_screen.dart';
 import 'playGameScreen.dart';
 import 'selectGameScreen.dart';
+import '../GameMechanics/class_game.dart';
 
+GameClass game = GameClass();
 void main() {
   runApp(const MaterialApp(
     title: "Joc Apostes",

@@ -11,16 +11,16 @@ class GameClass {
   void finalitzarJoc() {}
 
   // --------------------------------------------------- Funcions Jugador
-  void afegirJugador(var idJugador) {
+  void afegirJugador(var nomJugador) {
     if (nombreJugadors < MAX_JUGADORS) {
-      jugadors.add(JugadorClass(idJugador));
+      jugadors.add(JugadorClass(nomJugador));
       nombreJugadors++;
     }
   }
 
-  void eliminarJugador(var idJugador) {
+  void eliminarJugador(var nomJugador) {
     if (nombreJugadors > 0) {
-      jugadors.removeWhere((element) => element.idJugador == idJugador);
+      jugadors.removeWhere((element) => element.nomJugador == nomJugador);
       nombreJugadors--;
     }
   }

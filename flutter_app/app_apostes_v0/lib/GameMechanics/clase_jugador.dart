@@ -1,7 +1,7 @@
 class JugadorClass {
   // --------------------------------------------------- Funcions Iniciar Jugador
-  JugadorClass(var id) {
-    idJugador = id;
+  JugadorClass(var nom) {
+    nomJugador = nom;
   }
 
   // --------------------------------------------------- Geters
@@ -17,10 +17,6 @@ class JugadorClass {
     return nomJugador;
   }
 
-  int getIdJugador() {
-    return idJugador;
-  }
-
   // --------------------------------------------------- Seters
 
   void setDiners(int diners) {
@@ -29,10 +25,6 @@ class JugadorClass {
 
   void setNomJugador(String nomJugador) {
     this.nomJugador = nomJugador;
-  }
-
-  void setIdJugador(int idJugador) {
-    this.idJugador = idJugador;
   }
 
   // --------------------------------------------------- Funcions Diner
@@ -45,7 +37,6 @@ class JugadorClass {
   }
 
   // --------------------------------------------------- Variables
-  var idJugador = 0;
   var nomJugador = "";
   var diners = 0;
 }

@@ -5,6 +5,6 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer();
+    return const Drawer();
   }
 }
