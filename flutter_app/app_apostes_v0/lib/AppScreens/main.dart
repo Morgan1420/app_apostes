@@ -50,15 +50,27 @@ class MainApp extends StatelessWidget {
               },
               child: const Text('Load Last Game'),
             ),
-            ElevatedButton(
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const CreateGameScreen()),
                 );
+                game.jugadors.clear();
+                game.afegirJugador("Jugador 1");
               },
-              child: const Text('Create Game'),
+              child: Center(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Text("Change screen",
+                      style: TextStyle(color: Colors.white)),
+                ),
+              ),
             ),
             const Expanded(child: SizedBox()),
           ],

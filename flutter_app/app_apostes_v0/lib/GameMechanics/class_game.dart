@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'clase_jugador.dart';
 
 const MAX_JUGADORS = 10;
@@ -36,4 +38,16 @@ class GameClass {
   // Variables
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
+  List<Color> abailableColors = [
+    Colors.greenAccent,
+    Colors.redAccent,
+    Colors.blueAccent,
+    Colors.yellowAccent,
+    Colors.purpleAccent,
+    Colors.orangeAccent,
+    Colors.pinkAccent,
+    Colors.tealAccent,
+    Colors.cyanAccent,
+    Colors.limeAccent
+  ];
 }

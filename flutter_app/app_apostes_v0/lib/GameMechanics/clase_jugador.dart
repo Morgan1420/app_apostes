@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class JugadorClass {
   // --------------------------------------------------- Funcions Iniciar Jugador
   JugadorClass(var nom) {
@@ -17,6 +19,9 @@ class JugadorClass {
     return nomJugador;
   }
 
+  Color getColor() {
+    return color;
+  }
   // --------------------------------------------------- Seters
 
   void setDiners(int diners) {
@@ -25,6 +30,10 @@ class JugadorClass {
 
   void setNomJugador(String nomJugador) {
     this.nomJugador = nomJugador;
+  }
+
+  void setColor(Color color) {
+    this.color = color;
   }
 
   // --------------------------------------------------- Funcions Diner
@@ -37,6 +46,7 @@ class JugadorClass {
   }
 
   // --------------------------------------------------- Variables
-  var nomJugador = "";
+  String nomJugador = "";
+  Color color = Colors.blueAccent;
   var diners = 0;
 }
