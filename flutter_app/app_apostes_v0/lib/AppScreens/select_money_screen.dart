@@ -12,8 +12,15 @@ class SelectMoneyScreen extends StatefulWidget {
 }
 
 class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
+  List<TextEditingController> listController = [TextEditingController()];
+
   @override
   Widget build(BuildContext context) {
+    listController.clear();
+    for (var i = 0; i < game.nombreJugadors; i++) {
+      listController.add(TextEditingController());
+    }
+
     return Scaffold(
         appBar: AppBar(title: const Text("Joc Apostes")),
         body: SafeArea(
@@ -34,14 +41,40 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
             // ..................... Constructor de Jugadors .............................
             ListView.builder(
                 shrinkWrap: true,
-                itemCount: game.nombreJugadors,
+                itemCount: listController.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 15),
+                    padding: const EdgeInsets.only(top: 15, left: 30),
                     // ------------------------- Llista on es troben els elements de cada Jugador-------------------------------
-                    child: Row(
-                      children: [Text(game.jugadors[index].nomJugador)],
-                    ),
+                    child: Row(children: [
+                      Expanded(
+                        child: Text(
+                          game.jugadors[index].getNomJugador(),
+                          style:
+                              TextStyle(color: game.jugadors[index].getColor()),
+                        ),
+                      ),
+                      // ..................... Inserir el nom.............................
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 60,
+                          alignment: Alignment.center,
+                          child: TextFormField(
+                            controller: listController[index],
+                            autofocus: false,
+                            style: TextStyle(
+                                color: game.jugadors[index].getColor()),
+                            decoration: InputDecoration(
+                              iconColor: game.jugadors[index].getColor(),
+                              hintText: "Insert money here",
+                              labelStyle: TextStyle(
+                                  color: game.jugadors[index].getColor()),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
                   );
                 }),
           ],

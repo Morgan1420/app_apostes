@@ -122,9 +122,9 @@ class _CreateScreenState extends State<CreateGameScreen> {
                                       listController.removeAt(index);
                                     });
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.delete,
-                                    color: Colors.blue,
+                                    color: game.jugadors[index].getColor(),
                                     size: 35,
                                   ),
                                 )
