@@ -13,7 +13,7 @@ class SelectMoneyScreen extends StatefulWidget {
 
 class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
   List<TextEditingController> listController = [TextEditingController()];
-
+  bool moneyToAll = false;
   @override
   Widget build(BuildContext context) {
     listController.clear();
@@ -38,7 +38,33 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
             const SizedBox(
               height: 15,
             ),
-            // ..................... Constructor de Jugadors .............................
+
+            Row(
+              children: [
+                Expanded(child: Container()),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      moneyToAll = !moneyToAll;
+                    });
+                  },
+                  child: moneyToAll
+                      ? const Icon(
+                          Icons.check_box,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          Icons.check_box_outline_blank,
+                        ),
+                ),
+                const Text("Same Money For All"),
+                Expanded(child: Container()),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            // ..................... Constructor de insertor de diner dels Jugadors .............................
             ListView.builder(
                 shrinkWrap: true,
                 itemCount: listController.length,
@@ -46,7 +72,9 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 15, left: 30),
                     // ------------------------- Llista on es troben els elements de cada Jugador-------------------------------
+                    // ..................... nom del Jugador.............................
                     child: Row(children: [
+                      Expanded(child: Container()),
                       Expanded(
                         child: Text(
                           game.jugadors[index].getNomJugador(),
@@ -54,15 +82,38 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                               TextStyle(color: game.jugadors[index].getColor()),
                         ),
                       ),
-                      // ..................... Inserir el nom.............................
+                      // ..................... Inserir diner text form.............................
                       Expanded(
                         child: Row(
                           children: [
                             Expanded(
                                 child: TextFormField(
+                              controller: listController[index],
                               onChanged: (value) {
-                                game.jugadors[index]
-                                    .setDiners(int.parse(value));
+                                if (listController[index].text == "") {
+                                  listController[index].text = "0";
+                                }
+
+                                game.jugadors[index].setDiners(
+                                    int.parse(listController[index].text));
+                              },
+                              onTapOutside: (event) {
+                                if (listController[index].text != "") {
+                                  if (moneyToAll) {
+                                    game.setDinersTotsJugadors(
+                                        int.parse(listController[index].text));
+                                    for (var i = 0;
+                                        i < listController.length;
+                                        i++) {
+                                      listController[i].text = game.jugadors[i]
+                                          .getDiners()
+                                          .toString();
+                                    }
+                                  } else {
+                                    game.jugadors[index].setDiners(
+                                        int.parse(listController[index].text));
+                                  }
+                                }
                               },
                               decoration: InputDecoration(
                                 hintText:
@@ -70,32 +121,92 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                               ),
                             )),
                             const SizedBox(
-                              height: 15,
+                              width: 15,
                             ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      game.jugadors[index].afegirDiners(1);
-                                    },
-                                    child: const Icon(Icons.add),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      game.jugadors[index].eliminarDiners(1);
-                                    },
-                                    child: const Icon(Icons.remove),
-                                  )
-                                ],
-                              ),
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (moneyToAll) {
+                                        game.afegirDinersTotsJugadors(1);
+
+                                        for (var i = 0;
+                                            i < listController.length;
+                                            i++) {
+                                          listController[i].text = game
+                                              .jugadors[i]
+                                              .getDiners()
+                                              .toString();
+                                        }
+                                      } else {
+                                        game.jugadors[index].afegirDiners(1);
+                                        listController[index].text = game
+                                            .jugadors[index]
+                                            .getDiners()
+                                            .toString();
+                                      }
+                                    });
+                                  },
+                                  child: const Icon(Icons.add, size: 15),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (moneyToAll) {
+                                        game.afegirDinersTotsJugadors(-1);
+
+                                        for (var i = 0;
+                                            i < listController.length;
+                                            i++) {
+                                          listController[i].text = game
+                                              .jugadors[i]
+                                              .getDiners()
+                                              .toString();
+                                        }
+                                      } else {
+                                        game.jugadors[index].eliminarDiners(1);
+                                        listController[index].text = game
+                                            .jugadors[index]
+                                            .getDiners()
+                                            .toString();
+                                      }
+                                    });
+                                  },
+                                  child: const Icon(Icons.remove, size: 15),
+                                )
+                              ],
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      Expanded(child: Container()),
                     ]),
                   );
                 }),
+            const SizedBox(
+              height: 50,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectGameScreen()),
+                );
+              },
+              child: Center(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Text("Settings screen",
+                      style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            )
           ],
         ))));
   }

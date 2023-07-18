@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'select_money_screen.dart';
 import 'playGameScreen.dart';
 
-class SelectGameOptionsScreen extends StatelessWidget {
-  const SelectGameOptionsScreen({Key? key}) : super(key: key);
+class SelectGameScreen extends StatefulWidget {
+  const SelectGameScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SelectGameScreen> createState() => _SelectScreenState();
+}
+
+class _SelectScreenState extends State<SelectGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

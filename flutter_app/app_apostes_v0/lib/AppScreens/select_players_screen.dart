@@ -66,6 +66,9 @@ class _CreateScreenState extends State<CreateGameScreen> {
                                   labelStyle: TextStyle(
                                       color: game.jugadors[index].getColor()),
                                 ),
+                                onChanged: (String value) {
+                                  game.jugadors[index].setNomJugador(value);
+                                },
                               ),
                             ),
                           ),
@@ -141,14 +144,6 @@ class _CreateScreenState extends State<CreateGameScreen> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (listController.last.text != "") {
-                      game.jugadors.last
-                          .setNomJugador(listController.last.text);
-                    } else {
-                      game.jugadors.last
-                          .setNomJugador("Jugador ${game.nombreJugadors}");
-                    }
-
                     game.afegirJugador("Jugador ${game.nombreJugadors + 1}");
                     listController.add(TextEditingController());
                   });
@@ -173,13 +168,6 @@ class _CreateScreenState extends State<CreateGameScreen> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (listController.last.text != "") {
-                      game.jugadors.last
-                          .setNomJugador(listController.last.text);
-                    } else {
-                      game.jugadors.last
-                          .setNomJugador("Jugador ${game.nombreJugadors}");
-                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -194,7 +182,7 @@ class _CreateScreenState extends State<CreateGameScreen> {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Text("Change screen",
+                    child: const Text("Money screen",
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),
