@@ -56,24 +56,43 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                       ),
                       // ..................... Inserir el nom.............................
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 60,
-                          alignment: Alignment.center,
-                          child: TextFormField(
-                            controller: listController[index],
-                            autofocus: false,
-                            style: TextStyle(
-                                color: game.jugadors[index].getColor()),
-                            decoration: InputDecoration(
-                              iconColor: game.jugadors[index].getColor(),
-                              hintText: "Insert money here",
-                              labelStyle: TextStyle(
-                                  color: game.jugadors[index].getColor()),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: TextFormField(
+                              onChanged: (value) {
+                                game.jugadors[index]
+                                    .setDiners(int.parse(value));
+                              },
+                              decoration: InputDecoration(
+                                hintText:
+                                    game.jugadors[index].getDiners().toString(),
+                              ),
+                            )),
+                            const SizedBox(
+                              height: 15,
                             ),
-                          ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      game.jugadors[index].afegirDiners(1);
+                                    },
+                                    child: const Icon(Icons.add),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      game.jugadors[index].eliminarDiners(1);
+                                    },
+                                    child: const Icon(Icons.remove),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                      )
                     ]),
                   );
                 }),

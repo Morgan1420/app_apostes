@@ -27,9 +27,16 @@ class GameClass {
     }
   }
 
-  void afegirDinersJugador(var idJugador) {}
+  int posJugador(String jugador) {
+    for (var i = 0; i < jugadors.length; i++) {
+      if (jugadors[i].getNomJugador() == jugador) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
-  void eliminarDinersJugador(var idJugador) {}
+  // --------------------------------------------------- Funcions Diners
 
   // --------------------------------------------------- Funcions Crear Partida
 

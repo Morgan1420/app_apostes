@@ -141,7 +141,14 @@ class _CreateScreenState extends State<CreateGameScreen> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    game.jugadors.last.setNomJugador(listController.last.text);
+                    if (listController.last.text != "") {
+                      game.jugadors.last
+                          .setNomJugador(listController.last.text);
+                    } else {
+                      game.jugadors.last
+                          .setNomJugador("Jugador ${game.nombreJugadors}");
+                    }
+
                     game.afegirJugador("Jugador ${game.nombreJugadors + 1}");
                     listController.add(TextEditingController());
                   });
@@ -166,7 +173,13 @@ class _CreateScreenState extends State<CreateGameScreen> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    game.jugadors.last.setNomJugador(listController.last.text);
+                    if (listController.last.text != "") {
+                      game.jugadors.last
+                          .setNomJugador(listController.last.text);
+                    } else {
+                      game.jugadors.last
+                          .setNomJugador("Jugador ${game.nombreJugadors}");
+                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(
