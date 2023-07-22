@@ -57,7 +57,7 @@ class MainApp extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const CreateGameScreen()),
                 );
-                game.jugadors.clear();
+                game.resetejarJoc();
                 game.afegirJugador("Jugador 1");
               },
               child: Center(
@@ -67,7 +67,7 @@ class MainApp extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Text("Change screen",
+                  child: const Text("Create New Game",
                       style: TextStyle(color: Colors.white)),
                 ),
               ),

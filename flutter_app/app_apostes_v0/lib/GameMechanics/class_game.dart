@@ -12,6 +12,13 @@ class GameClass {
 
   void finalitzarJoc() {}
 
+  void resetejarJoc() {
+    jugadors.clear();
+    nombreJugadors = 0;
+    rotatingDealer = false;
+    dealer = 0;
+  }
+
   // --------------------------------------------------- Funcions Jugador
   void afegirJugador(var nomJugador) {
     if (nombreJugadors < MAX_JUGADORS) {
@@ -48,6 +55,19 @@ class GameClass {
       jugadors[i].afegirDiners(diners);
     }
   }
+
+  void setDinersInicialsTotsJugadors(var diners) {
+    for (var i = 0; i < jugadors.length; i++) {
+      jugadors[i].setDinersInicials(diners);
+    }
+  }
+
+  void afegirDinersInicialsTotsJugadors(var diners) {
+    for (var i = 0; i < jugadors.length; i++) {
+      jugadors[i].afegirDinersInicials(diners);
+    }
+  }
+
   // --------------------------------------------------- Funcions Crear Partida
 
   // --------------------------------------------------- Funcions Jugar Partida
@@ -55,4 +75,6 @@ class GameClass {
   // Variables
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
+  bool rotatingDealer = false;
+  int dealer = 0;
 }

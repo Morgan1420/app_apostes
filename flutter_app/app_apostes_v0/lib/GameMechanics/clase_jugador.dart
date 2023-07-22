@@ -24,10 +24,6 @@ class JugadorClass {
   }
   // --------------------------------------------------- Seters
 
-  void setDiners(int diners) {
-    this.diners = diners;
-  }
-
   void setNomJugador(String nomJugador) {
     this.nomJugador = nomJugador;
   }
@@ -37,6 +33,10 @@ class JugadorClass {
   }
 
   // --------------------------------------------------- Funcions Diner
+  void setDiners(int diners) {
+    this.diners = diners;
+  }
+
   void afegirDiners(int dinersAfegir) {
     diners += dinersAfegir;
   }
@@ -45,8 +45,26 @@ class JugadorClass {
     diners -= dinersEliminar;
   }
 
+  // --------------------------------------------------- Funcions diners inicials
+  void setDinersInicials(int diners) {
+    dinersInicials = diners;
+  }
+
+  void afegirDinersInicials(int dinersAfegir) {
+    dinersInicials += dinersAfegir;
+  }
+
+  void eliminarDinersInicials(int dinersEliminar) {
+    dinersInicials -= dinersEliminar;
+  }
+
+  int getDinersInicials() {
+    return dinersInicials;
+  }
+
   // --------------------------------------------------- Variables
   String nomJugador = "";
   Color color = Colors.blueAccent;
   var diners = 0;
+  var dinersInicials = 0;
 }

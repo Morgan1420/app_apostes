@@ -100,24 +100,25 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                               onTapOutside: (event) {
                                 if (listController[index].text != "") {
                                   if (moneyToAll) {
-                                    game.setDinersTotsJugadors(
+                                    game.setDinersInicialsTotsJugadors(
                                         int.parse(listController[index].text));
                                     for (var i = 0;
                                         i < listController.length;
                                         i++) {
                                       listController[i].text = game.jugadors[i]
-                                          .getDiners()
+                                          .getDinersInicials()
                                           .toString();
                                     }
                                   } else {
-                                    game.jugadors[index].setDiners(
+                                    game.jugadors[index].setDinersInicials(
                                         int.parse(listController[index].text));
                                   }
                                 }
                               },
                               decoration: InputDecoration(
-                                hintText:
-                                    game.jugadors[index].getDiners().toString(),
+                                hintText: game.jugadors[index]
+                                    .getDinersInicials()
+                                    .toString(),
                               ),
                             )),
                             const SizedBox(
@@ -129,21 +130,23 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                                   onTap: () {
                                     setState(() {
                                       if (moneyToAll) {
-                                        game.afegirDinersTotsJugadors(1);
+                                        game.afegirDinersInicialsTotsJugadors(
+                                            1);
 
                                         for (var i = 0;
                                             i < listController.length;
                                             i++) {
                                           listController[i].text = game
                                               .jugadors[i]
-                                              .getDiners()
+                                              .getDinersInicials()
                                               .toString();
                                         }
                                       } else {
-                                        game.jugadors[index].afegirDiners(1);
+                                        game.jugadors[index]
+                                            .afegirDinersInicials(1);
                                         listController[index].text = game
                                             .jugadors[index]
-                                            .getDiners()
+                                            .getDinersInicials()
                                             .toString();
                                       }
                                     });
@@ -154,21 +157,23 @@ class _SelectMoneyScreenState extends State<SelectMoneyScreen> {
                                   onTap: () {
                                     setState(() {
                                       if (moneyToAll) {
-                                        game.afegirDinersTotsJugadors(-1);
+                                        game.afegirDinersInicialsTotsJugadors(
+                                            -1);
 
                                         for (var i = 0;
                                             i < listController.length;
                                             i++) {
                                           listController[i].text = game
                                               .jugadors[i]
-                                              .getDiners()
+                                              .getDinersInicials()
                                               .toString();
                                         }
                                       } else {
-                                        game.jugadors[index].eliminarDiners(1);
+                                        game.jugadors[index]
+                                            .eliminarDinersInicials(1);
                                         listController[index].text = game
                                             .jugadors[index]
-                                            .getDiners()
+                                            .getDinersInicials()
                                             .toString();
                                       }
                                     });
