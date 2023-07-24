@@ -15,6 +15,10 @@ class JugadorClass {
     return diners;
   }
 
+  int getDinersApostats() {
+    return dinersApostats;
+  }
+
   String getNomJugador() {
     return nomJugador;
   }
@@ -30,6 +34,10 @@ class JugadorClass {
 
   void setColor(Color color) {
     this.color = color;
+  }
+
+  void setFold(bool fold) {
+    this.fold = fold;
   }
 
   // --------------------------------------------------- Funcions Diner
@@ -62,9 +70,14 @@ class JugadorClass {
     return dinersInicials;
   }
 
+  // --------------------------------------------------- Funcions aposta
+  void apostarDienrs(int diners) {
+    dinersApostats += diners;
+  }
+
   // --------------------------------------------------- Variables
   String nomJugador = "";
   Color color = Colors.blueAccent;
-  var diners = 0;
-  var dinersInicials = 0;
+  var diners = 0, dinersInicials = 0, dinersApostats = 0;
+  bool fold = false;
 }

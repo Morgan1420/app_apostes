@@ -8,7 +8,24 @@ class GameClass {
   // --------------------------------------------------- Funcions Joc
   void crearJoc() {}
 
-  void iniciarJoc() {}
+  void iniciarJoc() {
+    for (var i = 0; i < jugadors.length; i++) {
+      jugadors[i].apostarDienrs(apostaMinima);
+      dinerTaula += jugadors[i].getDinersApostats();
+      jugadors[i].setFold(false);
+    }
+  }
+
+  void iniciarRonda() {}
+
+  void pujarAposta(int diners) {
+    dinerTaula += diners;
+    jugadors[jugadorActual].apostarDienrs(diners);
+  }
+
+  void retirarJugador() {
+    jugadors[jugadorActual].setFold(true);
+  }
 
   void finalitzarJoc() {}
 
@@ -76,5 +93,6 @@ class GameClass {
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
   bool rotatingDealer = false;
-  int dealer = 0;
+  int dealer = 0, jugadorActual = 0;
+  int dinerTaula = 0, dinersAApostarCadaJugador = 0, apostaMinima = 0;
 }

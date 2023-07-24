@@ -48,10 +48,10 @@ class _SelectScreenState extends State<SelectGameScreen> {
             ),
             GestureDetector(
               onTap: () {
+                game.iniciarJoc();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const PlayGameScreen()),
+                  MaterialPageRoute(builder: (context) => PlayGameScreen()),
                 );
               },
               child: Center(

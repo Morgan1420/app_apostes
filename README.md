@@ -6,6 +6,7 @@
 - Select game options screen
 - Play game screen
 - In game options
+    - Poder mirar un resum de la partida
 - Save current game
 
 ## Algunes idees

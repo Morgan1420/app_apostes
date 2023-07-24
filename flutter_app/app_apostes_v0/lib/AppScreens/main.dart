@@ -44,8 +44,7 @@ class MainApp extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const PlayGameScreen()),
+                  MaterialPageRoute(builder: (context) => PlayGameScreen()),
                 );
               },
               child: const Text('Load Last Game'),
