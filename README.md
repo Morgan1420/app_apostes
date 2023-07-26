@@ -18,3 +18,6 @@ Al fer: "asignar diner random diferent a cada jugador -> dir que Same money for 
 
 ### Restart on create
 Fer que al crear una partida nova el que hi hàgi a la clase partida es reiniciï.
+
+### Negative money
+que en cap moment pugui una persona tindre diner negatiu (pestanyes de sel·leccionar diners o de jugar joc)
