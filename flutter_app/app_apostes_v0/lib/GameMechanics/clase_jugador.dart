@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 class JugadorClass {
   // --------------------------------------------------- Funcions Iniciar Jugador
-  JugadorClass(var id) {
-    idJugador = id;
+  JugadorClass(var nom) {
+    nomJugador = nom;
   }
 
   // --------------------------------------------------- Geters
@@ -13,29 +15,36 @@ class JugadorClass {
     return diners;
   }
 
+  int getDinersApostats() {
+    return dinersApostats;
+  }
+
   String getNomJugador() {
     return nomJugador;
   }
 
-  int getIdJugador() {
-    return idJugador;
+  Color getColor() {
+    return color;
   }
-
   // --------------------------------------------------- Seters
-
-  void setDiners(int diners) {
-    this.diners = diners;
-  }
 
   void setNomJugador(String nomJugador) {
     this.nomJugador = nomJugador;
   }
 
-  void setIdJugador(int idJugador) {
-    this.idJugador = idJugador;
+  void setColor(Color color) {
+    this.color = color;
+  }
+
+  void setFold(bool fold) {
+    this.fold = fold;
   }
 
   // --------------------------------------------------- Funcions Diner
+  void setDiners(int diners) {
+    this.diners = diners;
+  }
+
   void afegirDiners(int dinersAfegir) {
     diners += dinersAfegir;
   }
@@ -44,8 +53,31 @@ class JugadorClass {
     diners -= dinersEliminar;
   }
 
+  // --------------------------------------------------- Funcions diners inicials
+  void setDinersInicials(int diners) {
+    dinersInicials = diners;
+  }
+
+  void afegirDinersInicials(int dinersAfegir) {
+    dinersInicials += dinersAfegir;
+  }
+
+  void eliminarDinersInicials(int dinersEliminar) {
+    dinersInicials -= dinersEliminar;
+  }
+
+  int getDinersInicials() {
+    return dinersInicials;
+  }
+
+  // --------------------------------------------------- Funcions aposta
+  void apostarDienrs(int diners) {
+    dinersApostats += diners;
+  }
+
   // --------------------------------------------------- Variables
-  var idJugador = 0;
-  var nomJugador = "";
-  var diners = 0;
+  String nomJugador = "";
+  Color color = Colors.blueAccent;
+  var diners = 0, dinersInicials = 0, dinersApostats = 0;
+  bool fold = false;
 }
