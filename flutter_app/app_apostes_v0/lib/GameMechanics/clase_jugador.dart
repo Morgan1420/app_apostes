@@ -26,6 +26,10 @@ class JugadorClass {
   Color getColor() {
     return color;
   }
+
+  bool getFold() {
+    return fold;
+  }
   // --------------------------------------------------- Seters
 
   void setNomJugador(String nomJugador) {
@@ -38,19 +42,6 @@ class JugadorClass {
 
   void setFold(bool fold) {
     this.fold = fold;
-  }
-
-  // --------------------------------------------------- Funcions Diner
-  void setDiners(int diners) {
-    this.diners = diners;
-  }
-
-  void afegirDiners(int dinersAfegir) {
-    diners += dinersAfegir;
-  }
-
-  void eliminarDiners(int dinersEliminar) {
-    diners -= dinersEliminar;
   }
 
   // --------------------------------------------------- Funcions diners inicials
@@ -70,9 +61,30 @@ class JugadorClass {
     return dinersInicials;
   }
 
+  // --------------------------------------------------- Funcions Diner
+  void setDiners(int diners) {
+    this.diners = diners;
+  }
+
+  void afegirDiners(int dinersAfegir) {
+    diners += dinersAfegir;
+  }
+
+  void eliminarDiners(int dinersEliminar) {
+    diners -= dinersEliminar;
+  }
+
   // --------------------------------------------------- Funcions aposta
-  void apostarDienrs(int diners) {
+  void apostarDiners(int diners) {
     dinersApostats += diners;
+  }
+
+  void setDinersApotats(int diners) {
+    dinersApostats = diners;
+  }
+
+  void resetejarDinersApostats() {
+    dinersApostats = 0;
   }
 
   // --------------------------------------------------- Variables

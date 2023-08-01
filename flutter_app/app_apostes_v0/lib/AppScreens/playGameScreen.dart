@@ -50,32 +50,38 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    game.foldJugador();
+                    game.passarTorn();
+                  });
                 },
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: game.getColorButton(Colors.red),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Text("FOLD",
+                    child: const Text("Retirar-se",
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    game.igualarAposta();
+                    game.passarTorn();
+                  });
                 },
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
-                        color: Colors.lightGreen,
+                        color: game.getColorButton(Colors.lightGreen),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Text("See it",
+                    child: const Text("Igualar",
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),

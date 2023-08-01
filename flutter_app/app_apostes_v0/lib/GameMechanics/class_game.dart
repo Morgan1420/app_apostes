@@ -8,23 +8,87 @@ class GameClass {
   // --------------------------------------------------- Funcions Joc
   void crearJoc() {}
 
+  // ----------------------------------- Iniciadors
   void iniciarJoc() {
+    if (!jocIniciat) {
+      jocIniciat = true;
+
+      jugadors[jugadorActual]
+          .setDiners(jugadors[jugadorActual].getDinersInicials());
+      iniciarRonda();
+    }
+  }
+
+  void iniciarRonda() {
     for (var i = 0; i < jugadors.length; i++) {
-      jugadors[i].apostarDienrs(apostaMinima);
-      dinerTaula += jugadors[i].getDinersApostats();
+      jugadors[i].setDinersApotats(0);
       jugadors[i].setFold(false);
     }
   }
 
-  void iniciarRonda() {}
+  void iniciarTongada() {}
 
-  void pujarAposta(int diners) {
-    dinerTaula += diners;
-    jugadors[jugadorActual].apostarDienrs(diners);
+  // ----------------------------------- Torn jugador
+  void foldJugador() {
+    jugadors[jugadorActual].setFold(true);
   }
 
-  void retirarJugador() {
-    jugadors[jugadorActual].setFold(true);
+  void igualarAposta() {
+    jugadors[jugadorActual].apostarDiners(dinersAApostarCadaJugador -
+        jugadors[jugadorActual].getDinersApostats());
+    dinerTaula += (dinersAApostarCadaJugador -
+        jugadors[jugadorActual].getDinersApostats());
+  }
+
+  void pujarAposta(int diners) {
+    if (jugadors[jugadorActual].getDiners() - diners < 0) {
+      allIn();
+    }
+    dinerTaula += diners;
+    dinersAApostarCadaJugador += diners;
+
+    jugadors[jugadorActual].apostarDiners(diners);
+  }
+
+  void allIn() {
+    dinerTaula += (jugadors[jugadorActual].getDiners() -
+        jugadors[jugadorActual].getDinersApostats());
+    dinersAApostarCadaJugador += (jugadors[jugadorActual].getDiners() -
+        jugadors[jugadorActual].getDinersApostats());
+
+    jugadors[jugadorActual]
+        .setDinersApotats(jugadors[jugadorActual].getDiners());
+  }
+
+  void passarTorn() {
+    int ji = jugadorActual;
+
+    if (ultimJugadorFold()) {
+      finalitzarRonda();
+    }
+
+    do {
+      if (jugadorActual < nombreJugadors - 1) {
+        jugadorActual++;
+      } else {
+        jugadorActual = 0;
+      }
+    } while (jugadors[jugadorActual].getFold() && ji != jugadorActual);
+  }
+
+  // ----------------------------------- Finalitzadors
+  void finalitzarTongada() {}
+
+  void finalitzarRonda() {
+    for (var i = 0; i < jugadors.length; i++) {
+      if (jugadors[i].getNomJugador() == guanyadorRonda) {
+        jugadors[i].afegirDiners(dinerTaula - jugadors[i].getDinersApostats());
+      } else {
+        jugadors[i].eliminarDiners(jugadors[i].getDinersApostats());
+      }
+
+      jugadors[i].resetejarDinersApostats();
+    }
   }
 
   void finalitzarJoc() {}
@@ -85,14 +149,32 @@ class GameClass {
     }
   }
 
-  // --------------------------------------------------- Funcions Crear Partida
+  // --------------------------------------------------- Funcions Extra
+  Color getColorButton(Color col) {
+    if (jugadors[jugadorActual].getFold()) {
+      return Colors.grey;
+    }
+    return col;
+  }
 
-  // --------------------------------------------------- Funcions Jugar Partida
+  bool ultimJugadorFold() {
+    int j = 0;
+    for (var i = 0; i < jugadors.length; i++) {
+      if (jugadors[i].getFold()) {
+        j++;
+      }
+    }
+    if (j == jugadors.length - 1) {
+      return true;
+    }
+    return false;
+  }
 
   // Variables
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
-  bool rotatingDealer = false;
+  bool rotatingDealer = false, jocIniciat = false;
   int dealer = 0, jugadorActual = 0;
   int dinerTaula = 0, dinersAApostarCadaJugador = 0, apostaMinima = 0;
+  String guanyadorRonda = "";
 }
