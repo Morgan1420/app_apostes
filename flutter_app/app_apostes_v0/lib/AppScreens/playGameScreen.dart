@@ -44,17 +44,20 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
           // ------------------------- Informació Partida -------------------------------
           Text("Diner a la taula: ${game.dinerTaula}"),
           // ------------------------- Informació Jugador -------------------------------
-          const Text("Torn de: "),
           Row(
             children: [
+              Expanded(child: Container()),
+              const Text("Torn de: "),
               Text("${game.jugadors[jugadorActual].getNomJugador()} ("),
               Text(game.jugadors[jugadorActual].getDiners().toString()),
               const Text(")"),
+              Expanded(child: Container()),
             ],
           ),
           Text(
               "Diners apostats: ${game.jugadors[jugadorActual].getDinersApostats()}"),
           Text("Diners a apostar: ${game.dinersAApostarCadaJugador}"),
+          Text("${game.cartesRevelades} de 5 cartes revelades"),
           // ------------------------- Opcions jugador -------------------------------
           Row(
             children: [
@@ -160,22 +163,25 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    if (game.jugadors[jugadorActual].getRisen() == false) {
+                  if (game.jugadors[jugadorActual].getRisen() == false &&
+                      (game.dinersAApostarCadaJugador +
+                              int.parse(listController[jugadorActual].text)) <=
+                          game.jugadors[jugadorActual].getDiners()) {
+                    setState(() {
                       game.pujarAposta(listController[jugadorActual].text == ""
                           ? 0
                           : int.parse(listController[jugadorActual].text));
                       game.passarTorn();
-                      game.jugadors[jugadorActual].setRisen(true);
-                    }
-                  });
+                    });
+                  }
+                  ;
                 },
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
-                        color: game.getColorButton(Colors.green),
+                        color: game.getColorButtonRisen(Colors.green),
                         borderRadius: BorderRadius.circular(10)),
                     child: const Text("Raise",
                         style: TextStyle(color: Colors.white)),
@@ -194,7 +200,7 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
-                        color: Colors.yellow,
+                        color: game.getColorButtonRisen(Colors.yellow),
                         borderRadius: BorderRadius.circular(10)),
                     child: const Text("All in",
                         style: TextStyle(color: Colors.black87)),
