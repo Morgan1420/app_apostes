@@ -30,6 +30,10 @@ class JugadorClass {
   bool getFold() {
     return fold;
   }
+
+  bool getRisen() {
+    return risen;
+  }
   // --------------------------------------------------- Seters
 
   void setNomJugador(String nomJugador) {
@@ -42,6 +46,10 @@ class JugadorClass {
 
   void setFold(bool fold) {
     this.fold = fold;
+  }
+
+  void setRisen(bool risen) {
+    this.risen = risen;
   }
 
   // --------------------------------------------------- Funcions diners inicials
@@ -79,6 +87,10 @@ class JugadorClass {
     dinersApostats += diners;
   }
 
+  void desapostarDiners(int diners) {
+    dinersApostats -= diners;
+  }
+
   void setDinersApotats(int diners) {
     dinersApostats = diners;
   }
@@ -91,5 +103,5 @@ class JugadorClass {
   String nomJugador = "";
   Color color = Colors.blueAccent;
   var diners = 0, dinersInicials = 0, dinersApostats = 0;
-  bool fold = false;
+  bool fold = false, risen = false;
 }

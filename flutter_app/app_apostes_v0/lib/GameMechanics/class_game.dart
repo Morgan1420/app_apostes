@@ -34,20 +34,21 @@ class GameClass {
   }
 
   void igualarAposta() {
-    jugadors[jugadorActual].apostarDiners(dinersAApostarCadaJugador -
-        jugadors[jugadorActual].getDinersApostats());
     dinerTaula += (dinersAApostarCadaJugador -
+        jugadors[jugadorActual].getDinersApostats());
+    jugadors[jugadorActual].apostarDiners(dinersAApostarCadaJugador -
         jugadors[jugadorActual].getDinersApostats());
   }
 
   void pujarAposta(int diners) {
     if (jugadors[jugadorActual].getDiners() - diners < 0) {
       allIn();
-    }
-    dinerTaula += diners;
-    dinersAApostarCadaJugador += diners;
+    } else {
+      dinerTaula += diners;
+      dinersAApostarCadaJugador += diners;
 
-    jugadors[jugadorActual].apostarDiners(diners);
+      jugadors[jugadorActual].apostarDiners(diners);
+    }
   }
 
   void allIn() {
@@ -122,6 +123,10 @@ class GameClass {
       }
     }
     return -1;
+  }
+
+  int getJugadorActual() {
+    return jugadorActual;
   }
 
   // --------------------------------------------------- Funcions Diners
