@@ -22,16 +22,21 @@ class GameClass {
   }
 
   void iniciarRonda() {
+    fiRonda = false;
+    fiTongada = false;
     for (var i = 0; i < jugadors.length; i++) {
       jugadors[i].setDinersApotats(apostaMinima);
       jugadors[i].setFold(false);
     }
+
+    iniciarTongada();
   }
 
   void iniciarTongada() {
     fiTongada = false;
     textAlerta = "";
     tornsSensePujar = 0;
+    jugadorActual = dealer;
   }
 
   // ----------------------------------- Torn jugador
@@ -48,9 +53,9 @@ class GameClass {
   }
 
   void pujarAposta(int diners) {
-    tornsSensePujar = 0;
+    tornsSensePujar = 1;
     jugadors[jugadorActual].setRisen(true);
-    if (jugadors[jugadorActual].getDiners() - diners < 0) {
+    if (jugadors[jugadorActual].getDiners() - diners <= 0) {
       allIn();
     } else {
       dinerTaula += diners;
@@ -61,7 +66,7 @@ class GameClass {
   }
 
   void allIn() {
-    tornsSensePujar = 0;
+    tornsSensePujar = 1;
     jugadors[jugadorActual].setRisen(true);
     dinerTaula += (jugadors[jugadorActual].getDiners() -
         jugadors[jugadorActual].getDinersApostats());
@@ -87,15 +92,16 @@ class GameClass {
       }
     } while (jugadors[jugadorActual].getFold() && ji != jugadorActual);
 
-    if (tornsSensePujar == nombreJugadors - 1) {
+    if (tornsSensePujar == nombreJugadors) {
       finalitzarTongada();
-      textAlerta = "Tongada finalitzada, Aixecar cartes";
     }
   }
 
   // ----------------------------------- Finalitzadors
   void finalitzarTongada() {
+    textAlerta = "Tongada finalitzada, Aixecar cartes";
     fiTongada = true;
+
     for (var i = 0; i < jugadors.length; i++) {
       jugadors[i].setRisen(false);
     }
@@ -110,25 +116,19 @@ class GameClass {
         cartesRevelades = 5;
         break;
       default:
-        textAlerta = "Ronda finalitzada, Seleccionar guanyador";
         finalitzarRonda();
         break;
     }
   }
 
   void finalitzarRonda() {
-    for (var i = 0; i < jugadors.length; i++) {
-      if (jugadors[i].getNomJugador() == guanyadorRonda) {
-        jugadors[i].afegirDiners(dinerTaula - jugadors[i].getDinersApostats());
-      } else {
-        jugadors[i].eliminarDiners(jugadors[i].getDinersApostats());
-      }
-
-      jugadors[i].resetejarDinersApostats();
-    }
+    textAlerta = "Ronda finalitzada, Seleccionar guanyador";
     dinersAApostarCadaJugador = apostaMinima;
+    fiRonda = true;
+    if (rotatingDealer) dealer++;
   }
 
+  void asignarGuanyador() {}
   void finalitzarJoc() {}
 
   void resetejarJoc() {
@@ -222,7 +222,10 @@ class GameClass {
   // Variables
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
-  bool rotatingDealer = false, jocIniciat = false, fiTongada = false;
+  bool rotatingDealer = false,
+      jocIniciat = false,
+      fiTongada = false,
+      fiRonda = false;
   int dealer = 0, jugadorActual = 0, tornsSensePujar = 0;
   int dinerTaula = 0, dinersAApostarCadaJugador = 0, apostaMinima = 0;
   int cartesRevelades = 0;

@@ -28,7 +28,9 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
     jugadorActual = game.getJugadorActual();
     listController[jugadorActual].text = "0";
 
-    if (game.fiTongada) {
+    if (game.fiRonda) {
+      return interficieTriaGuanyador();
+    } else if (game.fiTongada) {
       return interficieInformativa();
     } else {
       return interficieApostes();
@@ -97,10 +99,15 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    game.allIn();
-                    game.passarTorn();
-                  });
+                  if (game.jugadors[jugadorActual].getRisen() == false &&
+                      (game.dinersAApostarCadaJugador +
+                              int.parse(listController[jugadorActual].text)) <=
+                          game.jugadors[jugadorActual].getDiners()) {
+                    setState(() {
+                      game.allIn();
+                      game.passarTorn();
+                    });
+                  }
                 },
                 child: Center(
                   child: Container(
@@ -274,6 +281,39 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
 
   Scaffold interficieTriaGuanyador() {
     // en aquesta interficie es seleccionarà el jugador guanyador de la ronda (quí es quedarà tot el diner de la taula)
-    return Scaffold();
+    return Scaffold(
+        drawer: const NavBar(),
+        appBar: AppBar(
+          title: const Text("Joc Apostes"),
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MainApp()));
+                })
+          ],
+        ),
+        body: Column(children: [
+          Text(game.textAlerta),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                game.iniciarRonda();
+              });
+            },
+            child: Center(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Text("Continuar",
+                    style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ),
+        ]));
   }
 }
