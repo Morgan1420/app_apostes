@@ -28,20 +28,27 @@ class GameClass {
     }
   }
 
-  void iniciarTongada() {}
+  void iniciarTongada() {
+    fiTongada = false;
+    textAlerta = "";
+    tornsSensePujar = 0;
+  }
 
   // ----------------------------------- Torn jugador
   void foldJugador() {
+    tornsSensePujar++;
     jugadors[jugadorActual].setFold(true);
   }
 
   void igualarAposta() {
+    tornsSensePujar++;
     dinerTaula += (dinersAApostarCadaJugador -
         jugadors[jugadorActual].getDinersApostats());
     jugadors[jugadorActual].setDinersApotats(dinersAApostarCadaJugador);
   }
 
   void pujarAposta(int diners) {
+    tornsSensePujar = 0;
     jugadors[jugadorActual].setRisen(true);
     if (jugadors[jugadorActual].getDiners() - diners < 0) {
       allIn();
@@ -54,6 +61,7 @@ class GameClass {
   }
 
   void allIn() {
+    tornsSensePujar = 0;
     jugadors[jugadorActual].setRisen(true);
     dinerTaula += (jugadors[jugadorActual].getDiners() -
         jugadors[jugadorActual].getDinersApostats());
@@ -82,14 +90,12 @@ class GameClass {
     if (tornsSensePujar == nombreJugadors - 1) {
       finalitzarTongada();
       textAlerta = "Tongada finalitzada, Aixecar cartes";
-    } else {
-      tornsSensePujar++;
-      textAlerta = "";
     }
   }
 
   // ----------------------------------- Finalitzadors
   void finalitzarTongada() {
+    fiTongada = true;
     for (var i = 0; i < jugadors.length; i++) {
       jugadors[i].setRisen(false);
     }
@@ -216,7 +222,7 @@ class GameClass {
   // Variables
   var nombreJugadors = 0;
   List<JugadorClass> jugadors = []; // array on es guarden els jugadors
-  bool rotatingDealer = false, jocIniciat = false;
+  bool rotatingDealer = false, jocIniciat = false, fiTongada = false;
   int dealer = 0, jugadorActual = 0, tornsSensePujar = 0;
   int dinerTaula = 0, dinersAApostarCadaJugador = 0, apostaMinima = 0;
   int cartesRevelades = 0;

@@ -1,6 +1,6 @@
+import 'package:app_apostes_v0/AppScreens/blueprints.dart';
 import 'package:app_apostes_v0/AppScreens/main.dart';
 import 'package:flutter/material.dart';
-import 'select_money_screen.dart';
 import 'nav_bar.dart';
 import 'select_game_options_screen.dart';
 import '../GameMechanics/class_game.dart';
@@ -14,6 +14,7 @@ class PlayGameScreen extends StatefulWidget {
 
 class _PlayGameScreenState extends State<PlayGameScreen> {
   List<TextEditingController> listController = [TextEditingController()];
+  int jugadorActual = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,18 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
       }
     }
 
-    int jugadorActual = game.getJugadorActual();
+    jugadorActual = game.getJugadorActual();
     listController[jugadorActual].text = "0";
+
+    if (game.fiTongada) {
+      return interficieInformativa();
+    } else {
+      return interficieApostes();
+    }
+  }
+
+  Scaffold interficieApostes() {
+    // en aquesta interficie actuaran els jugadors de manera activa realitzant les diferents apostes
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
@@ -61,6 +72,7 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
           // ------------------------- Opcions jugador -------------------------------
           Row(
             children: [
+              Expanded(child: Container()),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -71,14 +83,39 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                        horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
                         color: game.getColorButton(Colors.red),
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: const Text("Retirar-se",
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    game.allIn();
+                    game.passarTorn();
+                  });
+                },
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 15),
+                    decoration: BoxDecoration(
+                        color: game.getColorButtonRisen(Colors.yellow),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Text("All in",
+                        style: TextStyle(color: Colors.black87)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
               ),
               GestureDetector(
                 onTap: () {
@@ -90,19 +127,21 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                        horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
                         color: game.getColorButton(Colors.lightGreen),
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: const Text("Igualar",
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),
+              Expanded(child: Container()),
             ],
           ),
           Row(
             children: [
+              Expanded(child: Container()),
               Expanded(
                 child: Row(
                   children: [
@@ -122,7 +161,7 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                           hintText: listController[jugadorActual].text),
                     )),
                     const SizedBox(
-                      width: 15,
+                      width: 5,
                     ),
                     Column(
                       children: [
@@ -138,9 +177,7 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (game.jugadors[jugadorActual].getDiners() -
-                                    int.parse(
-                                        listController[jugadorActual].text) >
+                            if (int.parse(listController[jugadorActual].text) >
                                 0) {
                               int novaAposta = int.parse(
                                       listController[jugadorActual].text) -
@@ -159,7 +196,7 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                 ),
               ),
               const SizedBox(
-                width: 30,
+                width: 10,
               ),
               GestureDetector(
                 onTap: () {
@@ -174,7 +211,6 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                       game.passarTorn();
                     });
                   }
-                  ;
                 },
                 child: Center(
                   child: Container(
@@ -188,29 +224,56 @@ class _PlayGameScreenState extends State<PlayGameScreen> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    game.allIn();
-                    game.passarTorn();
-                  });
-                },
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                        color: game.getColorButtonRisen(Colors.yellow),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Text("All in",
-                        style: TextStyle(color: Colors.black87)),
-                  ),
-                ),
-              ),
+              Expanded(child: Container()),
             ],
-          )
+          ),
+          Text(game.textAlerta),
         ],
       ),
     );
+    ;
+  }
+
+  Scaffold interficieInformativa() {
+    // en aquesta interficie es mostrara la informacio de la partida de l'estil: mostrar carta, guanyador: --- continuar?, ...
+    return Scaffold(
+        drawer: const NavBar(),
+        appBar: AppBar(
+          title: const Text("Joc Apostes"),
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MainApp()));
+                })
+          ],
+        ),
+        body: Column(children: [
+          Text(game.textAlerta),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                game.iniciarTongada();
+              });
+            },
+            child: Center(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Text("Continuar",
+                    style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ),
+        ]));
+  }
+
+  Scaffold interficieTriaGuanyador() {
+    // en aquesta interficie es seleccionarà el jugador guanyador de la ronda (quí es quedarà tot el diner de la taula)
+    return Scaffold();
   }
 }
